@@ -1,7 +1,6 @@
 const nthline = require("nthline");
 const Parser = require("error-stack-parser");
 const chalk = require("chalk");
-const highlight = require("cli-highlight").highlight;
 const { fail } = require("./actions");
 
 class PrettyError {
@@ -52,17 +51,13 @@ class PrettyError {
     );
     const lowerLineNumber = chalk.blackBright(this._lineNumber + 1 + " |");
 
-    let upperLine = `${spaces(8)}${upperLineNumber} ${highlight(
-      upperContents
-    )}`;
+    let upperLine = `${spaces(8)}${upperLineNumber} ${upperContents}`;
 
     let mainLine = `${spaces(
       6
     )}${errorLineMark}${mainLineNumber} ${errorLineHighlight(mainContents)}`;
 
-    let lowerLine = `${spaces(8)}${lowerLineNumber} ${highlight(
-      lowerContents
-    )}`;
+    let lowerLine = `${spaces(8)}${lowerLineNumber} ${lowerContents}`;
 
     console.log(upperLine);
     console.log(mainLine);

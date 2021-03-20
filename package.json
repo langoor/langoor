@@ -1,8 +1,10 @@
 {
   "dependencies": {
+    "assert": "^2.0.0",
+    "boxen": "^5.0.0",
     "chalk": "^4.1.0",
-    "cli-highlight": "^2.1.10",
     "error-stack-parser": "^2.0.6",
+    "lodash": "^4.17.21",
     "nthline": "^1.0.2"
   },
   "name": "langoor",

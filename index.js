@@ -3,6 +3,7 @@ const assert = require("assert");
 const { pass, loading } = require("./util/actions");
 const validate = require("./util/validate");
 const { PrettyError } = require("./util/pretty-error");
+const diggedFiles = require("./util/walk").files;
 
 const path = require("path");
 let tests = [];
@@ -37,7 +38,10 @@ function run() {
 
 global.test = test;
 
-const files = process.argv.slice(2).map((file) => path.resolve(".", file));
+const files = process.argv
+  .slice(2)
+  .concat(diggedFiles)
+  .map((file) => path.resolve(".", file));
 files.forEach((file) => {
   loading(file);
   require(file);

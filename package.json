@@ -1,0 +1,40 @@
+{
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "cli-highlight": "^2.1.10",
+    "error-stack-parser": "^2.0.6",
+    "nthline": "^1.0.2"
+  },
+  "name": "langoor",
+  "description": "Langoor testing framework",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "langoor"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/langoor/langoor.git"
+  },
+  "keywords": [
+    "test",
+    "testing",
+    "tests",
+    "mocha",
+    "chai",
+    "jest",
+    "supertest",
+    "karma",
+    "ava"
+  ],
+  "author": "squik",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/langoor/langoor/issues"
+  },
+  "homepage": "https://github.com/langoor/langoor#readme",
+  "bin": {
+    "langoor": "index.js"
+  }
+}

@@ -36,3 +36,19 @@ langoor
 ```bash
 langoor <file_path>
 ```
+
+## File Usage
+
+```js
+test("should give 2 + 2 = 4", (assert) => {
+  /*                           ^^^^^^
+    the "assert" package can be accessed here */
+  assert.equal(2 + 2, 4);
+});
+```
+
+## To-do list
+
+- Adding configuration features from user's side.
+- Making our own assertion features rather than using assert.
+- Making the performance better.

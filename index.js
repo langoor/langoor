@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 const assert = require("assert");
 const { pass, loading } = require("./util/actions");
-const validate = require("./util/validate");
 const { PrettyError } = require("./util/pretty-error");
 const diggedFiles = require("./util/walk").files;
 const path = require("path");
@@ -15,23 +14,23 @@ let suites = 0;
 let tests = [];
 
 function test(name, fn) {
-  if (!validate(name, "string")) {
+  if (typeof name !== "string") {
     throw new TypeError(
       'Name should be type string. Got "' + typeof name + '".'
     );
   }
 
-  if (!validate(fn, "function")) {
+  if (typeof fn !== "function") {
     throw new TypeError(
       'Callback should be type function. Got "' + typeof fn + '".'
     );
   }
 
-  tests.push({ name, fn, dirname: __filename });
+  tests.push({ name, fn });
 }
 
 function run() {
-  tests.forEach((test) => {
+  for (let test of tests) {
     try {
       let now = Date.now();
       test.fn(assert);
@@ -41,7 +40,7 @@ function run() {
       new PrettyError(error, test.name);
       ++failed;
     }
-  });
+  }
 
   setTimeout(() => {
     const template = chalk.hex("#4DA8DA").underline.bold;

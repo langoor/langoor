@@ -5,14 +5,15 @@ let files = [];
 function walk(dir) {
   let dirFiles = fs.readdirSync(dir);
   dirFiles.forEach((file) => {
+    let absolutePath = path.resolve(dir, file);
     if (file.startsWith("node_modules") || file.startsWith(".git")) return;
-    if (fs.statSync(path.resolve(dir, file)).isDirectory()) {
-      walk(path.resolve(dir, file));
+    if (fs.statSync(absolutePath).isDirectory()) {
+      walk(absolutePath);
     } else {
-      files.push(path.resolve(dir, file));
+      if (file.endsWith(".test.js")) files.push(absolutePath);
     }
   });
 }
 
 walk(".");
-module.exports = { files: files.filter((f) => f.endsWith(".test.js")) };
+module.exports = { files };

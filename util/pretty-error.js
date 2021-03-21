@@ -8,14 +8,10 @@ class PrettyError {
     this._parsedError = Parser.parse(err)[0];
     this._lineNumber = this._parsedError.lineNumber;
     this._fileName = this._parsedError.fileName;
-    this._errorName = err.name;
-    this._errorMessage = err.message;
 
     this.getLines().then((contents) => {
       fail(testName);
-      console.log(
-        chalk.bold("\t" + this._errorName + ": " + this._errorMessage)
-      );
+      console.log(chalk.bold("\t" + err.name + ": " + err.message));
       this.render(contents);
     });
   }

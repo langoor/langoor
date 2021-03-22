@@ -7,6 +7,7 @@ const path = require("path");
 const _ = require("lodash");
 const chalk = require("chalk");
 const boxen = require("boxen");
+const getCallerFile = require("get-caller-file");
 
 let passed = 0;
 let failed = 0;
@@ -26,7 +27,7 @@ function test(name, fn) {
     );
   }
 
-  tests.push({ name, fn });
+  tests.push({ name, fn, file: getCallerFile() });
 }
 
 function run() {
@@ -37,7 +38,7 @@ function run() {
       pass(test.name, Date.now() - now);
       ++passed;
     } catch (error) {
-      new PrettyError(error, test.name);
+      new PrettyError(error, test.name, test.file);
       ++failed;
     }
   }

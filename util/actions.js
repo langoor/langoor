@@ -4,8 +4,12 @@ const pass = (name, time) => {
   console.log(chalk.bgGreen.black` PASS `, chalk.green(name), `(${time}ms)`);
 };
 
-const fail = (name) => {
-  console.log(chalk.bgRed.black` FAIL `, chalk.red(name));
+const fail = (name, filename) => {
+  console.log(
+    chalk.bgRed.black` FAIL `,
+    chalk.red(name),
+    `at ${chalk.yellow(filename)}`
+  );
 };
 
 const loading = (fileName) => {

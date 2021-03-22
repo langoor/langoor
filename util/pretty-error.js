@@ -4,13 +4,13 @@ const chalk = require("chalk");
 const { fail } = require("./actions");
 
 class PrettyError {
-  constructor(err, testName) {
+  constructor(err, testName, fileName) {
     this._parsedError = Parser.parse(err)[0];
     this._lineNumber = this._parsedError.lineNumber;
     this._fileName = this._parsedError.fileName;
 
     this.getLines().then((contents) => {
-      fail(testName);
+      fail(testName, fileName);
       console.log(chalk.bold("\t" + err.name + ": " + err.message));
       this.render(contents);
     });

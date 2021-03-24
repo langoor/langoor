@@ -10,7 +10,7 @@
   },
   "name": "langoor",
   "description": "Langoor testing framework",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "main": "index.js",
   "devDependencies": {},
   "scripts": {

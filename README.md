@@ -47,6 +47,16 @@ test("should give 2 + 2 = 4", (assert) => {
 });
 ```
 
+## Custom Tests
+
+```js
+test("2 + 3 = 4?", () => {
+  if (2 + 3 !== 4) {
+    throw new Error("FAILED");
+  }
+});
+```
+
 ## To-do list
 
 - Adding configuration features from user's side.

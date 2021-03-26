@@ -1,4 +1,6 @@
-# 🐒 Langoor
+# 🐒 **Langoor**
+
+## **The 21st century javascript unit testing framework.**
 
 ## Features
 
@@ -9,7 +11,7 @@
 
 ## Demo
 
-![Langoor Demo](https://i.postimg.cc/VkjYWwSP/langoor-demo.png)
+![Langoor Demo](https://i.postimg.cc/85qWYLNS/Langoor-Demo-2.png)
 
 ## Installation
 
@@ -54,6 +56,18 @@ test("2 + 3 = 4?", () => {
   if (2 + 3 !== 4) {
     throw new Error("FAILED");
   }
+});
+```
+
+## Langoor In-Built Logs
+
+Langoor provides in-built logs which are organised and are showed file-by-file.
+
+Syntax - `console.langoor(data);`
+
+```js
+test("should log 'LANGOOR'", () => {
+  console.langoor("LANGOOR");
 });
 ```
 

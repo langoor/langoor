@@ -1,7 +1,6 @@
 {
   "dependencies": {
     "assert": "^2.0.0",
-    "boxen": "^5.0.0",
     "chalk": "^4.1.0",
     "error-stack-parser": "^2.0.6",
     "get-caller-file": "^2.0.5",
@@ -10,7 +9,7 @@
   },
   "name": "langoor",
   "description": "Langoor testing framework",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "main": "index.js",
   "devDependencies": {},
   "scripts": {

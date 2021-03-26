@@ -25,39 +25,33 @@ class PrettyError {
   }
 
   render({ mainContents, upperContents, lowerContents }) {
-    const spaces = (n) => " ".repeat(n);
-    const errorLineMark = chalk.redBright`> `;
-    const errorLineHighlight = chalk.bgRed.white.bold;
-    const lengthInterval = [
-      spaces(
-        (this._lineNumber + 1).toString().length -
-          (this._lineNumber - 1).toString().length
-      ),
-      spaces(
-        (this._lineNumber + 1).toString().length -
-          this._lineNumber.toString().length
-      ),
+    let adjustedLineNumbers = [
+      this._lineNumber - 1 + "",
+      this._lineNumber + "",
+      this._lineNumber + 1 + "",
     ];
 
-    const mainLineNumber = chalk.blackBright(
-      this._lineNumber + lengthInterval[1] + " |"
+    if (adjustedLineNumbers[2].length > adjustedLineNumbers[1].length) {
+      adjustedLineNumbers[0] = adjustedLineNumbers[0] + " ";
+      adjustedLineNumbers[1] = adjustedLineNumbers[1] + " ";
+    }
+
+    if (adjustedLineNumbers[1].length > adjustedLineNumbers[0].length) {
+      adjustedLineNumbers[0] = adjustedLineNumbers[0] + " ";
+    }
+
+    console.log(
+      `\t${chalk.gray`${adjustedLineNumbers[0]} | `}` + upperContents
     );
-    const upperLineNumber = chalk.blackBright(
-      this._lineNumber - 1 + lengthInterval[0] + " |"
+    console.log(
+      `${" ".repeat(
+        6
+      )}${chalk.redBright`> `}${chalk.gray`${adjustedLineNumbers[1]} | `}` +
+        chalk.bgRedBright.whiteBright(mainContents)
     );
-    const lowerLineNumber = chalk.blackBright(this._lineNumber + 1 + " |");
-
-    let upperLine = `${spaces(8)}${upperLineNumber} ${upperContents}`;
-
-    let mainLine = `${spaces(
-      6
-    )}${errorLineMark}${mainLineNumber} ${errorLineHighlight(mainContents)}`;
-
-    let lowerLine = `${spaces(8)}${lowerLineNumber} ${lowerContents}`;
-
-    console.log(upperLine);
-    console.log(mainLine);
-    console.log(lowerLine);
+    console.log(
+      `\t${chalk.gray`${adjustedLineNumbers[2]} | `}` + lowerContents
+    );
   }
 }
 

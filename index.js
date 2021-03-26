@@ -1,21 +1,19 @@
 #!/usr/bin/env node
 const assert = require("assert");
-const { pass, loading, fail, fileActions } = require("./util/actions");
+const { pass, loading } = require("./util/actions");
 const { PrettyError } = require("./util/pretty-error");
 const diggedFiles = require("./util/walk").files;
 const path = require("path");
 const _ = require("lodash");
 const chalk = require("chalk");
-const boxen = require("boxen");
 const getCallerFile = require("get-caller-file");
-const { performance } = require("perf_hooks");
 
 let passed = 0;
 let failed = 0;
 let suites = 0;
 let tests = [];
 let failedSuites = [];
-let passedSuites = [];
+let logs = {};
 
 function test(name, fn) {
   if (typeof name !== "string") {
@@ -33,12 +31,12 @@ function test(name, fn) {
   tests.push({ name, fn, file: getCallerFile() });
 }
 
-function run() {
+function main() {
   for (let test of tests) {
     try {
-      let now = performance.now();
+      let now = new Date().getTime();
       test.fn(assert);
-      pass(test.name, Math.round(performance.now() - now));
+      pass(test.name, new Date().getTime() - now);
       ++passed;
     } catch (error) {
       if (!failedSuites.includes(test.file)) failedSuites.push(test.file);
@@ -48,38 +46,48 @@ function run() {
   }
 
   setTimeout(() => {
-    const template = chalk.hex("#4DA8DA").underline.bold;
-    let res = [];
-    const respush = (...strings) => {
-      res.push(strings.join(" "));
-    };
-
+    const template = chalk.bgHex("#4DA8DA").black;
+    if (Object.keys(logs).length > 0) {
+      console.log();
+      console.log(chalk.bgMagenta.black(" LOGS "));
+      Object.keys(logs).forEach((key) => {
+        let filename = key;
+        let log = logs[key];
+        console.log(chalk.bold("• " + filename));
+        log.forEach((l) => {
+          console.log("\t" + l);
+        });
+      });
+    }
     console.log();
-    console.log(chalk.bgMagenta.black(" RESULT "));
-
-    respush(
-      template("Suites:"),
+    console.log(
+      template(" Suites "),
       chalk.green(`${suites - failedSuites.length} passed`),
       "|",
       chalk.red(`${failedSuites.length} failed`),
       "|",
       chalk.white(`${suites} total`)
     );
-
-    respush(
-      template("Tests:"),
+    console.log(
+      template(" Tests  "),
       chalk.green(`${passed} passed`),
       "|",
       chalk.red(`${failed} failed`),
       "|",
       chalk.white(`${tests.length} total`)
     );
-
-    console.log(boxen(res.join("\n"), { borderStyle: "round", padding: 1 }));
-  }, failed * 100);
+  }, failed * 30);
 }
 
 global.test = test;
+global.console.langoor = function (...data) {
+  let file = getCallerFile();
+  if (!(file in logs)) {
+    logs[file] = data;
+  } else {
+    logs[file] = logs[file].concat(data);
+  }
+};
 
 files = _.uniqWith(
   process.argv
@@ -95,4 +103,4 @@ files.forEach((file) => {
   require(file);
 });
 
-run();
+main();

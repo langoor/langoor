@@ -12,17 +12,8 @@ const fail = (name, filename) => {
   );
 };
 
-const fileActions = {
-  fail: (filename) => {
-    console.log(chalk.bgRed.black` FAIL `, filename);
-  },
-  pass: (filename) => {
-    console.log(chalk.bgGreen.black` PASS `, filename);
-  },
-};
-
 const loading = (fileName) => {
   console.log(chalk.bgYellow.black` LOADING `, fileName);
 };
 
-module.exports = { pass, fail, loading, fileActions };
+module.exports = { pass, fail, loading };

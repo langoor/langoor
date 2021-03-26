@@ -1,3 +1,4 @@
+console.langoor("File 2 here!");
 test("should yield 4 (2 + 2)", ({ equal }) => {
   equal(2 + 2, 4);
 });
@@ -22,4 +23,8 @@ test("should yield 8 (2 ^ 3)", ({ equal }) => {
 
 test("should yield 200 (100 * 2)", ({ equal }) => {
   equal(100 * 2, 300);
+});
+
+test("should log 'Langoor rocks!'", () => {
+  console.langoor("Langoor rocks!");
 });

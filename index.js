@@ -45,7 +45,8 @@ function main() {
     }
   }
 
-  setTimeout(() => {
+  let interval = setInterval(() => {
+    if (passed + failed !== tests.length) return;
     const template = chalk.bgHex("#4DA8DA").black;
     if (Object.keys(logs).length > 0) {
       console.log();
@@ -76,7 +77,8 @@ function main() {
       "|",
       chalk.white(`${tests.length} total`)
     );
-  }, failed * 30);
+    clearInterval(interval);
+  }, 100);
 }
 
 global.test = test;

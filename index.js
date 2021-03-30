@@ -76,12 +76,6 @@ function main() {
       ++failed;
     }
   }
-
-  let interval = setInterval(() => {
-    if (passed + failed !== tests.length) return;
-    printResult();
-    clearInterval(interval);
-  }, 100);
 }
 
 global.test = test;
@@ -109,3 +103,7 @@ files.forEach((file) => {
 });
 
 main();
+process.on("beforeExit", (code) => {
+  if (code !== 0) return;
+  printResult();
+});

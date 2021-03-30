@@ -9,7 +9,7 @@
   },
   "name": "langoor",
   "description": "The 21st century javascript unit testing framework.",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "main": "index.js",
   "devDependencies": {},
   "scripts": {

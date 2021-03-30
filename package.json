@@ -4,6 +4,7 @@
     "chalk": "^4.1.0",
     "error-stack-parser": "^2.0.6",
     "get-caller-file": "^2.0.5",
+    "langoor-walk": "^1.0.0",
     "lodash": "^4.17.21",
     "nthline": "^1.0.2"
   },

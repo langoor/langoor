@@ -14,6 +14,38 @@ let suites = 0;
 let tests = [];
 let failedSuites = [];
 let logs = {};
+let printResult = () => {
+  const template = chalk.bgHex("#4DA8DA").black;
+  if (Object.keys(logs).length > 0) {
+    console.log();
+    console.log(chalk.bgMagenta.black(" LOGS "));
+    Object.keys(logs).forEach((key) => {
+      let filename = key;
+      let log = logs[key];
+      console.log(chalk.bold("• " + filename));
+      log.forEach((l) => {
+        console.log("\t" + l);
+      });
+    });
+  }
+  console.log();
+  console.log(
+    template(" Suites "),
+    chalk.green(`${suites - failedSuites.length} passed`),
+    "|",
+    chalk.red(`${failedSuites.length} failed`),
+    "|",
+    chalk.white(`${suites} total`)
+  );
+  console.log(
+    template(" Tests  "),
+    chalk.green(`${passed} passed`),
+    "|",
+    chalk.red(`${failed} failed`),
+    "|",
+    chalk.white(`${tests.length} total`)
+  );
+};
 
 function test(name, fn) {
   if (typeof name !== "string") {
@@ -47,36 +79,7 @@ function main() {
 
   let interval = setInterval(() => {
     if (passed + failed !== tests.length) return;
-    const template = chalk.bgHex("#4DA8DA").black;
-    if (Object.keys(logs).length > 0) {
-      console.log();
-      console.log(chalk.bgMagenta.black(" LOGS "));
-      Object.keys(logs).forEach((key) => {
-        let filename = key;
-        let log = logs[key];
-        console.log(chalk.bold("• " + filename));
-        log.forEach((l) => {
-          console.log("\t" + l);
-        });
-      });
-    }
-    console.log();
-    console.log(
-      template(" Suites "),
-      chalk.green(`${suites - failedSuites.length} passed`),
-      "|",
-      chalk.red(`${failedSuites.length} failed`),
-      "|",
-      chalk.white(`${suites} total`)
-    );
-    console.log(
-      template(" Tests  "),
-      chalk.green(`${passed} passed`),
-      "|",
-      chalk.red(`${failed} failed`),
-      "|",
-      chalk.white(`${tests.length} total`)
-    );
+    printResult();
     clearInterval(interval);
   }, 100);
 }
@@ -84,10 +87,10 @@ function main() {
 global.test = test;
 global.console.langoor = function (...data) {
   let file = getCallerFile();
-  if (!(file in logs)) {
-    logs[file] = data;
-  } else {
+  if (file in logs) {
     logs[file] = logs[file].concat(data);
+  } else {
+    logs[file] = data;
   }
 };
 

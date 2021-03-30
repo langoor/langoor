@@ -8,8 +8,8 @@
     "nthline": "^1.0.2"
   },
   "name": "langoor",
-  "description": "Langoor testing framework",
-  "version": "1.0.18",
+  "description": "The 21st century javascript unit testing framework.",
+  "version": "1.0.19",
   "main": "index.js",
   "devDependencies": {},
   "scripts": {

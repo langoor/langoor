@@ -2,7 +2,7 @@
 const assert = require("assert");
 const { pass, loading } = require("./util/actions");
 const { PrettyError } = require("./util/pretty-error");
-const diggedFiles = require("./util/walk").files;
+const diggedFiles = require("langoor-walk").files;
 const path = require("path");
 const _ = require("lodash");
 const chalk = require("chalk");

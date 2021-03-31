@@ -1,12 +1,13 @@
 #!/usr/bin/env node
 const assert = require("assert");
-const { pass, loading } = require("./util/actions");
-const { PrettyError } = require("./util/pretty-error");
+const { pass, loading } = require("../console-actions");
+const { PrettyError } = require("../pretty-error");
 const diggedFiles = require("langoor-walk").files;
 const path = require("path");
 const _ = require("lodash");
 const chalk = require("chalk");
 const getCallerFile = require("get-caller-file");
+const { hope } = require("langoor-exceptions");
 
 let passed = 0;
 let failed = 0;
@@ -60,17 +61,21 @@ function test(name, fn) {
     );
   }
 
+  // appending test to variables tests
   tests.push({ name, fn, file: getCallerFile() });
 }
 
 function main() {
+  // running a for loop for all tests
   for (let test of tests) {
     try {
+      // if test passes
       let now = new Date().getTime();
       test.fn(assert);
       pass(test.name, new Date().getTime() - now);
       ++passed;
     } catch (error) {
+      // if test fails
       if (!failedSuites.includes(test.file)) failedSuites.push(test.file);
       new PrettyError(error, test.name, test.file);
       ++failed;
@@ -78,7 +83,8 @@ function main() {
   }
 }
 
-global.test = test;
+// Setting Global Variables
+global.test = test; // test function
 global.console.langoor = function (...data) {
   let file = getCallerFile();
   if (file in logs) {
@@ -86,8 +92,10 @@ global.console.langoor = function (...data) {
   } else {
     logs[file] = data;
   }
-};
+}; // langoor log system
+global.hope = hope; // assertion
 
+// setting files
 files = _.uniqWith(
   process.argv
     .slice(2)
@@ -96,13 +104,17 @@ files = _.uniqWith(
   _.isEqual
 );
 
+// requiring files
 files.forEach((file) => {
   ++suites;
   loading(file);
   require(file);
 });
 
+// running main function
 main();
+
+// handling result before exit
 process.on("beforeExit", (code) => {
   if (code !== 0) return;
   printResult();

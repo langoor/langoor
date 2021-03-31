@@ -1,11 +1,11 @@
 const nthline = require("nthline");
 const Parser = require("error-stack-parser");
 const chalk = require("chalk");
-const { fail } = require("./actions");
+const { fail } = require("./console-actions");
 
 class PrettyError {
   constructor(err, testName, fileName) {
-    this._parsedError = Parser.parse(err)[0];
+    this._parsedError = Parser.parse(err)[err.name === "LangoorError" ? 1 : 0];
     this._lineNumber = this._parsedError.lineNumber;
     this._fileName = this._parsedError.fileName;
 

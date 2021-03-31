@@ -1,18 +1,16 @@
 {
   "dependencies": {
-    "assert": "^2.0.0",
     "chalk": "^4.1.0",
     "error-stack-parser": "^2.0.6",
     "get-caller-file": "^2.0.5",
+    "langoor-exceptions": "^1.0.0",
     "langoor-walk": "^1.0.0",
     "lodash": "^4.17.21",
     "nthline": "^1.0.2"
   },
   "name": "langoor",
   "description": "The 21st century javascript unit testing framework.",
-  "version": "1.0.21",
-  "main": "index.js",
-  "devDependencies": {},
+  "version": "2.0.0",
   "scripts": {
     "test": "langoor"
   },
@@ -39,6 +37,6 @@
   },
   "homepage": "https://github.com/langoor/langoor#readme",
   "bin": {
-    "langoor": "index.js"
+    "langoor": "src/cli/langoor.js"
   }
 }
